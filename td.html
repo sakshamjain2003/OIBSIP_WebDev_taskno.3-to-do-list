@@ -377,18 +377,18 @@
             const task = tasks.find(t => t.id === taskId);
             if (!task) return;
 
-            const taskElement = document.querySelector([data-task-id="${taskId}"]);
+            const taskElement = document.querySelector(`[data-task-id="${taskId}"]`);
             const taskContent = taskElement.querySelector('.task-content');
             
             const currentText = task.text;
             
-            taskContent.innerHTML = 
+            taskContent.innerHTML = `
                 <input type="text" class="edit-input" value="${currentText}" maxlength="200">
                 <div class="edit-actions">
                     <button onclick="saveEdit(${taskId})" class="action-btn save-btn">Save</button>
                     <button onclick="cancelEdit(${taskId})" class="action-btn cancel-btn">Cancel</button>
                 </div>
-            ;
+            `;
             
             const input = taskContent.querySelector('.edit-input');
             input.focus();
@@ -407,7 +407,7 @@
             const task = tasks.find(t => t.id === taskId);
             if (!task) return;
 
-            const taskElement = document.querySelector([data-task-id="${taskId}"]);
+            const taskElement = document.querySelector(`[data-task-id="${taskId}"]`);
             const input = taskElement.querySelector('.edit-input');
             const newText = input.value.trim();
 
@@ -443,14 +443,14 @@
                 return;
             }
 
-            container.innerHTML = taskList.map(task => 
+            container.innerHTML = taskList.map(task => `
                 <div class="task-item ${task.completed ? 'completed' : ''}" data-task-id="${task.id}">
                     <div class="task-checkbox ${task.completed ? 'checked' : ''}" onclick="toggleTask(${task.id})"></div>
                     <div class="task-content">
                         <div class="task-text">${task.text}</div>
                         <div class="task-timestamps">
                             Added: ${formatDateTime(task.createdAt)}
-                            ${task.completedAt ? <br>Completed: ${formatDateTime(task.completedAt)} : ''}
+                            ${task.completedAt ? `<br>Completed: ${formatDateTime(task.completedAt)}` : ''}
                         </div>
                     </div>
                     <div class="task-actions">
@@ -458,7 +458,7 @@
                         <button onclick="deleteTask(${task.id})" class="action-btn delete-btn">Delete</button>
                     </div>
                 </div>
-            ).join('');
+            `).join('');
         }
 
         // Allow adding tasks with Enter key
